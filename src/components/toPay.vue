@@ -149,7 +149,25 @@ export default {
                 this.mui.toast("请选择地址");
                 return;
             }
-
+            let r = false
+            const orderF = ()=>{
+              return new Promise((resolve, reject)=>{
+                order.forEach(item=>{
+                  if(item.goodsNum > item.stock && r === false){
+                    this.mui.alert(`商品：${item.goodsName} 库存不足`)
+                    r = true
+                    resolve(true)
+                  }else{
+                    resolve(false)
+                  }
+                })
+              })
+            }
+            r = await orderF()
+            if(r){
+              return
+            }
+            console.log('rrrrrrrrrrrrrr'+r)
             let result = await this.$http.post("addOrder", {
                 goodsList: order,
                 address: address,
@@ -159,6 +177,7 @@ export default {
             console.log(result.data);
             this.mui.toast(result.data.msg);
             if (result.data.code === 0) {
+                 this.$store.commit("modifyBuList", []);
                 setTimeout(() => {
                     this.$router.push("/orders");
                 }, 2000);

@@ -16,7 +16,7 @@
           />
         </div>
         <div class="mui-button-row">
-          <button type="button" class="mui-btn mui-btn-primary" @click="login">登录</button>
+          <button type="button" class="mui-btn mui-btn-primary" :disabled="disabled" @click="login">登录</button>
         </div>
       </form>
       <a href="javascript:;" @click="register" class="login-now">免费注册</a>
@@ -30,7 +30,8 @@ export default {
       user: {
         username: "",
         password: ""
-      }
+      },
+      disabled: false
     };
   },
   created() {
@@ -49,8 +50,9 @@ export default {
         this.mui.alert("密码长度至少6位");
         return;
       }
+      this.disabled = true
       let result = await this.$http.post('login', this.user)
-      console.log(result.data)
+      this.disabled = false
       this.mui.toast(result.data.msg)
       if(result.data.code === 0){
         localStorage.setItem('token', result.data.token)

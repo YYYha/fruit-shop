@@ -3,7 +3,7 @@
     <div class="mui-scroll-wrapper">
       <div class="mui-scroll">
         <div >
-          <div class="show" v-show="goodsList.length === 0">
+          <div class="show" v-if="goodsList.length === 0">
             <img class="showImg" src="../assets/images/cartShow.png" alt="">
             <div @click="toShowItem">去逛逛</div>
           </div>
@@ -94,7 +94,7 @@ export default {
       if (num > stock) {
         this.$set(item, "goodsNum", stock);
       }
-      
+      console.log(isAdd, item.id)
       // 请求改变数量
       let result = await this.$http.post('isAddNum', {
         isAdd: isAdd,

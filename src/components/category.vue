@@ -200,7 +200,7 @@ export default {
   background: rgb(255, 72, 145);
   border-radius: 50%;
   text-align: center;
-  line-height: 22px;
+  line-height: 18px;
   color: white;
   font-size: 28px;
   position: absolute;

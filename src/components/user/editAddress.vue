@@ -10,7 +10,11 @@
         </div>
         <div>
             <span>收货地址</span>
-            <input type="text" placeholder="请填写详细收货地址" v-model="address.address">
+            <input type="text" readonly ref="provinceRef" placeholder="请选择省市区" @click="selectCity" v-model="address.province">
+        </div>
+        <div>
+            <span>详细地址</span>
+            <input type="text" placeholder="请输入详细地址" v-model="address.detail">
         </div>
         <div class="btn" @click="keepAddress">
             保存收货信息
@@ -18,18 +22,34 @@
     </div>
 </template>
 <script>
+import {cityData} from '../../assets/js/city'
+import '../../assets/mui/css/mui.picker.css'
+import '../../assets/mui/css/mui.poppicker.css'
+import '../../assets/mui/js/mui.picker.js'
+import '../../assets/mui/js/mui.poppicker'
+
 export default {
     data(){
         return{
-            address: {}
+            address: {
+                phone: null,
+                province: 'sf'
+            }
         }
     },
     created(){
         this.address = this.$route.params.item || {}
+        let mui = this.mui
         console.log(this.address)
     },
     methods: {
         async keepAddress(){
+            let Rex = /^1[3456789]\d{9}$/
+            if(!Rex.test(this.address.phone)){
+                this.mui.alert('请输入正确的电话号码')
+                return
+            }
+            console.log(this.address)
             let result = await this.$http.post('modifyAddress', 
                 {address: this.address}
             )
@@ -39,6 +59,26 @@ export default {
             setTimeout(()=>{
                 this.$router.go(-1)
             }, 1000)
+        },
+        selectCity(){
+            let picker = new this.mui.PopPicker({
+                layer: 3
+            })
+            picker.setData(cityData)
+            picker.show((selectItems)=>{
+                
+                if(selectItems[0].text === selectItems[1].text && selectItems[2].text){
+                    this.address.province = selectItems[0].text + selectItems[2].text
+                }else if(!selectItems[2].text){
+                    this.address.province = selectItems[0].text + selectItems[1].text 
+                }else{
+                    this.address.province = selectItems[0].text + selectItems[1].text + selectItems[2].text                    
+                }
+
+                this.$nextTick(()=>{
+                    this.$refs.provinceRef.value = this.address.province
+                })
+            })
         }
     }
 }

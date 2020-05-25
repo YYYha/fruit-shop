@@ -40,14 +40,18 @@ export default {
                 this.mui.toast('两次输入密码不一致')
                 return
             }
-            console.log(this.password)
+            
             let result = await this.$http.post('modifyPass', {password: this.password})
             if(result.status !== 200){
                 this.mui.toast('网络请求失败')
                 return
             }
+
             this.mui.toast(result.data.msg)
-            
+            if(result.data.code === 1) return
+            setTimeout(()=>{
+                this.$router.go(-1)
+            }, 2000)
         }
     }
 }

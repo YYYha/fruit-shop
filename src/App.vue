@@ -43,6 +43,19 @@ export default {
   created() {
     
   },
+  mounted(){
+      this.mui.confirm(
+        "此网站仅用于学习、测试，不存在任何的真实交易、与发货。",
+        "使用须知",
+        ["同意", "拒绝"],
+        res => {
+          if(res.index !== 0){
+            location.href = 'http://www.baidu.com'
+            return
+          }
+        }
+      )
+  },
   computed: {
     title() {
       return this.$store.state.title;

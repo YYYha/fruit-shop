@@ -7,9 +7,7 @@
         @click="detail(item)"
         >
           <div>
-            <div class="top">
-              <img :src="item.image" alt />
-            </div>
+            <img :src="item.image" alt />
           </div>
           <div>{{item.goodsName}}</div>
           <div>24小时内发货</div>
@@ -68,9 +66,17 @@ export default {
   margin-right: 0px;
 }
 .goods-items div:nth-child(1) img {
-  width: 100%;
+  width: 168px;
+  height: 168px;
 }
 .goods-items div:nth-child(2) {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .goods-items div:nth-child(3) {
   width: 84px;

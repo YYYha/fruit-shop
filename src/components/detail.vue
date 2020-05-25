@@ -13,7 +13,7 @@
           <div>
             ¥
             <span>{{goodsData.goodsPrice}}</span>
-          </div>&nbsp;/瓶
+          </div>&nbsp;/{{goodsData.weight}}
           <div>月销量 {{goodsData.saleNum}}件</div>
         </div>
       </div>

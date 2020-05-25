@@ -2,7 +2,7 @@
   <div class="mui-content">
     <div class="user-message">
       <div>
-        <img src="../../assets/images/banner5.png" alt />
+        <img src="../../assets/images/tou.jpg" alt />
       </div>
       <div>
         <span>{{userInfo[0].id}}</span>
@@ -58,8 +58,12 @@ export default {
         this.$router.push('/modifyPassword')
       },
       outLogin(){
-        localStorage.removeItem('token')
-        this.$router.push('/login')
+        this.mui.confirm('是否确定退出登录', '提示', ['确定', '取消'], (res)=>{
+          if(res.index === 0){
+            localStorage.removeItem('token')
+            this.$router.push('/login')
+          }
+        })
       },
       toOrder(){
         this.$router.push('/orders')

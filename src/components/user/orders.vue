@@ -2,7 +2,7 @@
   <div class="mui-content">
     <div class="mui-scroll-wrapper">
       <div class="mui-scroll">
-        <div class="order">
+        <div class="order" v-if="orderList.length !== 0">
           <div class="orders-item" v-for="item in orderList" :key="item.id">
             <div class="address">
               <div>
@@ -50,6 +50,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="noData" v-else-if="orderList.length === 0">
+          <img src="../../assets/images/orders.png" alt="">
         </div>
       </div>
     </div>
@@ -165,5 +168,14 @@ img {
   color: rgb(150, 150, 150) !important;
   font-size: 14px;
   padding-left: 10px;
+}
+
+.noData{
+  width: 100%;
+  height: 600px;
+  background: #fff;
+}
+.noData img{
+  width: 100%;
 }
 </style>
